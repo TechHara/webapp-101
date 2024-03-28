@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web app 101</title>
+</head>
+<body>
+    <h1>Python interpreter</h1>
+    <input type="text" id="expression" placeholder="Enter an expression to evaluate">
+    <button onclick="sendRequest()">Send</button>
+    <p id="response"></p>
+
+    <script>
+        function sendRequest() {
+            const endpoint = "/evaluate"
+            const expression = document.getElementById('expression').value;
+            fetch(endpoint, {
+                method: 'POST',
+                body: JSON.stringify({
+                    expression: expression
+                }), // Empty request body
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('response').textContent = data;
+            })
+            .catch(error => {
+                console.error('Error sending request:', error);
+            });
+        }
+    </script>
+</body>
+</html>
+
